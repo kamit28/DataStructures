@@ -108,9 +108,7 @@ public:
 	}
 
 	std::list<weighted_edge> get_edge(int source) const {
-		std::cout << source << std::endl;
 		if (graph.find(source) == graph.end()) {
-			std::cout << source << std::endl;
 			throw std::logic_error(
 					"The vertex entered is not present in the graph");
 		}

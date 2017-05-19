@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iterator>
 #include <exception>
+#include <algorithm>
 
 template<typename T>
 class arr_list {
@@ -30,11 +31,18 @@ public:
 	arr_list(const T* other, int start, int end) {
 		size_t = capacity_t = end - start;
 		arr = new T[end - start];
-		std::copy(other, other+size_t, arr);
+		std::copy(other, other + size_t, arr);
+	}
+
+	arr_list(const arr_list& other) {
+		arr = new T[other.capacity_t];
+		size_t = other.size_t;
+		capacity_t = other.capacity_t;
+		std::copy(other.arr, other.arr + size_t, arr);
 	}
 
 	virtual ~arr_list() {
-		//delete arr;
+		delete[] arr;
 	}
 
 	//inserts an element at the front of the list.
@@ -46,12 +54,9 @@ public:
 	bool insert(const T& element, int position) {
 		capacity_check();
 		range_check(position);
-		int start = position + 1;
-		for(int i = size_t; i >= start; --i) {
-			arr[i] = arr[i-1];
-		}
+		std::move_backward(arr + position, arr + size_t, arr + size_t + 1);
 		arr[position] = element;
-		size_t++;
+		++size_t;
 		return true;
 	}
 
@@ -66,11 +71,7 @@ public:
 	// deletes the elements at position.
 	bool remove(int position) {
 		range_check(position);
-
-		for(int i = position + 1; i <= size_t; ++i) {
-			arr[i - 1] = arr[i];
-		}
-
+		std::move(arr + position + 1, arr + size_t, arr + position);
 		--size_t;
 		return true;
 	}
@@ -119,13 +120,13 @@ private:
 	int capacity_t;
 
 	void range_check(const int position) const {
-		if(position > size_t - 1) {
+		if (position > size_t - 1) {
 			throw std::logic_error("position was out of range");
 		}
 	}
 
 	void capacity_check() const {
-		if(size_t + 1 > capacity_t) {
+		if (size_t + 1 > capacity_t) {
 			throw std::logic_error("list is full");
 		}
 	}

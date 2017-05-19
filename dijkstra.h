@@ -20,12 +20,10 @@
 weighted_edge getMinUnvistedEdge(const adjacency_list& graph,
 		std::unordered_set<int>& visited, int i) {
 	std::list<weighted_edge> edges = graph.get_edge(i);
-	std::cout << i << ": " << edges.size() << std::endl;
 	weighted_edge minEdge;
 	minEdge.setWeight(10000000);
 	for (std::list<weighted_edge>::iterator it = edges.begin();
 			it != edges.end(); ++it) {
-		std::cout <<  (*it).toString() << std::endl;
 		if (!visited.count((*it).getEndVertex())) {
 			if ((*it).getWeight() < minEdge.getWeight()) {
 				minEdge = *it;
@@ -47,10 +45,8 @@ void dijkstra(adjacency_list& graph, int source) {
 	visited.insert(source);
 	int i = source;
 	int temp;
-	//std::cout << graph.size() << std::endl;
 	while (visited.size() < graph.size()) {
 		edge = getMinUnvistedEdge(graph, visited, i);
-		//std::cout << edge.toString() << std::endl;
 		if (edge.getStartVertex() != 0) {
 			temp = edge.getWeight() + dist[i];
 			if (temp < dist[edge.getEndVertex()]) {
@@ -60,7 +56,6 @@ void dijkstra(adjacency_list& graph, int source) {
 			}
 		}
 		visited.insert(edge.getEndVertex());
-		//std::cout << edge.toString() <<std::endl;
 		i = edge.getEndVertex();
 	}
 
