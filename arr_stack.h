@@ -2,7 +2,7 @@
  * arr_stack.h
  *
  *  Created on: 11-May-2017
- *      Author: Amit
+ *      Author: Anshu
  */
 
 #ifndef ARR_STACK_H_

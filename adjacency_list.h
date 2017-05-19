@@ -2,7 +2,7 @@
  * adjacency_list.h
  *
  *  Created on: 12-May-2017
- *      Author: Amit
+ *      Author: Anshu
  */
 
 #ifndef ADJACENCY_LIST_H_

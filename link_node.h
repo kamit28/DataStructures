@@ -2,7 +2,7 @@
  * link_node.h
  *
  *  Created on: 13-May-2017
- *      Author: Amit
+ *      Author: Anshu
  */
 
 #ifndef LINK_NODE_H_
