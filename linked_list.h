@@ -2,7 +2,7 @@
  * linked_list.h
  *
  *  Created on: 13-May-2017
- *      Author: Amit
+ *      Author: Anshu
  */
 
 #ifndef LINKED_LIST_H_

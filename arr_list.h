@@ -2,7 +2,7 @@
  * arr_list.h
  *
  *  Created on: 11-May-2017
- *      Author: Amit
+ *      Author: Anshu
  */
 
 #ifndef ARR_LIST_H_
