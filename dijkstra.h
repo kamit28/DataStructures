@@ -2,7 +2,7 @@
  * dijkstra.h
  *
  *  Created on: 12-May-2017
- *      Author: Anshu
+ *      Author: Amit
  */
 #ifndef DIJKSTRA_H_
 #define DIJKSTRA_H_
