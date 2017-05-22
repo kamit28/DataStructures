@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <iostream>
 
 template<class T>
 class CircularQueue {
@@ -61,10 +62,17 @@ CircularQueue<T>::CircularQueue(const unsigned int capacity) :
 }
 
 template<class T>
-CircularQueue<T>::CircularQueue(const CircularQueue& other) :
-		arr(new T[other.capacity_t]), head(other.head), tail(other.tail), capacity_t(
-				capacity), size_t(other.size_t) {
-	std::copy(other.arr, other.arr + (head - tail), arr);
+CircularQueue<T>::CircularQueue(const CircularQueue& other) {
+	arr = new T[other.capacity_t];
+	capacity_t = other.capacity_t;
+	size_t = other.size_t;
+	if (other.empty()) {
+		head = tail = -1;
+	} else {
+		head = 0;
+		tail = other.size_t - 1;
+		std::copy(other.arr + head, other.arr + tail + 1, arr);
+	}
 }
 
 template<class T>
