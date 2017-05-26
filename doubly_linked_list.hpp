@@ -2,7 +2,7 @@
  * doubly_linked_list.hpp
  *
  *  Created on: 22-May-2017
- *      Author: Anshu
+ *      Author: Amit
  */
 
 #ifndef DOUBLY_LINKED_LIST_HPP_

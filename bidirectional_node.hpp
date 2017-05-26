@@ -2,7 +2,7 @@
  * bidirectional_node.hpp
  *
  *  Created on: 22-May-2017
- *      Author: Anshu
+ *      Author: Amit
  */
 
 #ifndef BIDIRECTIONAL_NODE_HPP_
