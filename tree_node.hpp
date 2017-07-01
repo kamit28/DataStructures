@@ -70,6 +70,10 @@ public:
 	void setRight(TreeNode<T>* right) {
 		this->right = right;
 	}
+
+	bool isLeaf(void) const {
+		return this->right == nullptr && this->left == nullptr;
+	}
 };
 
 #endif /* TREE_NODE_HPP_ */

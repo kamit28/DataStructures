@@ -17,6 +17,45 @@ class BinarySearchTree {
 private:
 	TreeNode<T>* root;
 
+	TreeNode<T>* findSmallestInRightSubtree(const TreeNode<T>* rootNode) {
+		TreeNode<T>* ptr = rootNode->getRight();
+		while (ptr->getLeft() != nullptr) {
+			ptr = ptr->getLeft();
+		}
+		return ptr;
+	}
+
+	TreeNode<T>* findLargestInLeftSubtree(const TreeNode<T>* rootNode) {
+		TreeNode<T>* ptr = rootNode->getLeft();
+		while (ptr->getRight() != nullptr) {
+			ptr = ptr->getRight();
+		}
+		return ptr;
+	}
+
+	void swap(TreeNode<T>* one, TreeNode<T>* two) const {
+		T tempData = one->getData();
+		one->setData(two->getData());
+		two->setData(tempData);
+	}
+
+	TreeNode<T>* findPrev(TreeNode<T>* node, TreeNode<T>* rootNode) {
+		TreeNode<T>* ptr = rootNode;
+		while (ptr != nullptr && !ptr->isLeaf()) {
+			if ((ptr->getLeft() != nullptr
+					&& ptr->getLeft()->getData() == node->getData())
+					|| (ptr->getRight() != nullptr
+							&& ptr->getRight()->getData() == node->getData())) {
+				return ptr;
+			} else if (ptr->getData() < node->getData()) {
+				ptr = ptr->getRight();
+			} else {
+				ptr = ptr->getLeft();
+			}
+		}
+		return nullptr;
+	}
+
 public:
 	BinarySearchTree() {
 		root = nullptr;
@@ -49,19 +88,88 @@ public:
 		}
 	}
 
-	bool searchElement(const T& element) const {
+	TreeNode<T>* searchElement(const T& element) const {
 		TreeNode<T>* temp = root;
 
 		while (temp != nullptr) {
 			if (temp->getData() == element) {
-				return true;
+				return temp;
 			} else if (element < temp->getData()) {
 				temp = temp->getLeft();
 			} else {
 				temp = temp->getRight();
 			}
 		}
-		return false;
+		return nullptr;
 	}
+
+	void deleteElement(const T& element) {
+		TreeNode<T>* temp = searchElement(element);
+		TreeNode<T>* prev = nullptr;
+		TreeNode<T>* ptr = nullptr;
+
+		if (temp != nullptr) {
+			if (temp->isLeaf()) {
+				prev = findPrev(temp, root);
+				if (temp == prev->getRight()) {
+					prev->setRight(nullptr);
+				} else {
+					prev->setLeft(nullptr);
+				}
+				delete temp;
+			} else if (temp->getRight() != nullptr) {
+				ptr = findSmallestInRightSubtree(temp);
+				if (ptr->isLeaf()) {
+					prev = findPrev(ptr, temp);
+					swap(temp, ptr);
+					if (ptr == prev->getRight()) {
+						prev->setRight(nullptr);
+					} else {
+						prev->setLeft(nullptr);
+					}
+					delete ptr;
+				} else {
+					prev = findPrev(ptr, temp);
+					swap(temp, ptr);
+					if (prev != nullptr) {
+						prev->setLeft(ptr->getRight());
+						delete ptr;
+					}
+				}
+			} else {
+				ptr = findLargestInLeftSubtree(temp);
+				if (ptr->isLeaf()) {
+					prev = findPrev(ptr, temp);
+					swap(ptr, temp);
+					if (ptr == prev->getRight()) {
+						prev->setRight(nullptr);
+					} else {
+						prev->setLeft(nullptr);
+					}
+					delete ptr;
+				} else {
+					prev = findPrev(ptr, temp);
+					swap(ptr, temp);
+					if (prev != nullptr) {
+						prev->setRight(ptr->getLeft());
+						delete ptr;
+					}
+				}
+			}
+		}
+	}
+
+	void printTree() const {
+		inOrder(root);
+	}
+
+	void inOrder(TreeNode<T>* node) const {
+		if (node != nullptr) {
+			inOrder(node->getLeft());
+			std::cout << node->getData() << '\t';
+			inOrder(node->getRight());
+		}
+	}
+
 };
 #endif /* BINARY_SEARCH_TREE_HPP_ */
