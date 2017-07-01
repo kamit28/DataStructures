@@ -10,6 +10,7 @@
 
 #include <exception>
 #include "tree_node.hpp"
+#include "linked_queue.hpp"
 
 template<class T>
 class BinarySearchTree {
@@ -169,6 +170,27 @@ public:
 			std::cout << node->getData() << '\t';
 			inOrder(node->getRight());
 		}
+	}
+
+	/**
+	 * Method to traverse a binary search tree in Breadth First Order
+	 */
+	void bfs(void) {
+		LinkedQueue<TreeNode<T>* > queue;
+		if(root != nullptr) queue.offer(root);
+
+		while(!queue.is_empty()) {
+			TreeNode<T>* node = queue.peek();
+			std::cout << node->getData() << '\t';
+			if(node->getLeft() != nullptr) {
+				queue.offer(node->getLeft());
+			}
+			if(node->getRight() != nullptr) {
+				queue.offer(node->getRight());
+			}
+			queue.take();
+		}
+		std::cout << std::endl;
 	}
 
 };
