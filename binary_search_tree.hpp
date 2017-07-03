@@ -62,6 +62,10 @@ public:
 		root = nullptr;
 	}
 
+	TreeNode<T>* getRoot() const {
+		return root;
+	}
+
 	void insertElement(const T& element) {
 		TreeNode<T>* node = new TreeNode<T>(element, nullptr, nullptr);
 		TreeNode<T>* temp = nullptr;
@@ -172,20 +176,37 @@ public:
 		}
 	}
 
+	void preOrder(TreeNode<T>* node) const {
+		if (node != nullptr) {
+			std::cout << node->getData() << '\t';
+			preOrder(node->getLeft());
+			preOrder(node->getRight());
+		}
+	}
+
+	void postOrder(TreeNode<T>* node) const {
+		if (node != nullptr) {
+			postOrder(node->getLeft());
+			postOrder(node->getRight());
+			std::cout << node->getData() << '\t';
+		}
+	}
+
 	/**
 	 * Method to traverse a binary search tree in Breadth First Order
 	 */
 	void bfs(void) {
-		LinkedQueue<TreeNode<T>* > queue;
-		if(root != nullptr) queue.offer(root);
+		LinkedQueue<TreeNode<T>*> queue;
+		if (root != nullptr)
+			queue.offer(root);
 
-		while(!queue.is_empty()) {
+		while (!queue.is_empty()) {
 			TreeNode<T>* node = queue.peek();
 			std::cout << node->getData() << '\t';
-			if(node->getLeft() != nullptr) {
+			if (node->getLeft() != nullptr) {
 				queue.offer(node->getLeft());
 			}
-			if(node->getRight() != nullptr) {
+			if (node->getRight() != nullptr) {
 				queue.offer(node->getRight());
 			}
 			queue.take();
